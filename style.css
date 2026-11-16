@@ -1,0 +1,534 @@
+/* =========================================================
+   POSTER STYLE
+   Big type, bold flat colors, thick borders, hard shadows.
+   ========================================================= */
+
+/* ---------- 1. COLORS ----------
+   --block   = color of the alternating full-width sections
+   --accent  = the hot color used for shapes, buttons, highlights
+   --line    = color of borders, hard shadows and the ticker band
+   Dark and Neon modes swap these (see the NEON THEME section). */
+
+:root,
+[data-theme="light"] {
+  --bg: #fff1dc;
+  --surface: #ffffff;
+  --text: #111111;
+  --muted: #3a3a3a;
+  --accent: #ff4d1a;
+  --block: #ffd23f;
+  --on-accent: #111111;
+  --line: #111111;
+}
+
+[data-theme="dark"] {
+  --bg: #1a0409;          /* very dark crimson */
+  --surface: #2b0a12;     /* cards */
+  --text: #ffe8d6;        /* warm off-white */
+  --muted: #e6bfa8;
+  --accent: #c0173a;      /* crimson: buttons, circle, labels */
+  --block: #723d08;       /* alternating sections */
+  --on-accent: #fff4ea;   /* text on crimson */
+  --line: #ffb27a;        /* light orange: borders, outlines, shadows */
+}
+
+/* NEON THEME: near-black with electric blue highlights.
+   Background colors are sampled from your night-canyon photo. */
+[data-theme="neon"] {
+  --bg: #030613;
+  --surface: #061f33;
+  --text: #e6f6ff;
+  --muted: #9cc3d8;
+  --accent: #29c5ff;
+  --block: #041427;
+  --on-accent: #030613;
+  --line: #29c5ff;
+}
+
+/* ---------- 2. BASICS ---------- */
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+body {
+  margin: 0;
+  font-family: "Manrope", system-ui, sans-serif;
+  line-height: 1.6;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+main,
+.header-inner,
+.site-footer {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+section { padding: 72px 0; }
+
+p { max-width: 62ch; color: var(--muted); margin: 0 0 16px; }
+a { color: var(--text); }
+ul, ol { padding: 0; margin: 0; list-style: none; }
+
+:focus-visible {
+  outline: 4px solid var(--line);
+  outline-offset: 3px;
+}
+
+/* ---------- 3. HEADLINES ---------- */
+
+h1, h2 {
+  font-family: "Anton", Impact, sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin: 0 0 24px;
+}
+
+h1 {
+  font-size: clamp(3.5rem, 15vw, 9.5rem);
+  line-height: 0.9;
+  color: var(--text);
+}
+
+h2 {
+  display: inline-block;
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  line-height: 0.95;
+  padding-bottom: 6px;
+  border-bottom: 8px solid var(--accent);
+}
+
+h3 { font-size: 1.15rem; font-weight: 800; line-height: 1.25; margin: 0 0 8px; }
+
+/* ---------- 4. HEADER + NAV ---------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg);
+  border-bottom: 4px solid var(--line);
+}
+
+.header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.logo {
+  font-family: "Anton", Impact, sans-serif;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.header-tools { display: flex; align-items: center; gap: 8px; order: 2; }
+
+.nav { display: flex; gap: 20px; order: 1; flex: 1; justify-content: center; }
+.nav a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.nav a:hover { background: var(--accent); color: var(--on-accent); }
+
+.menu-button {
+  display: none;
+  font-size: 1.3rem;
+  line-height: 1;
+  padding: 6px 10px;
+  border: 3px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+/* ---------- 5. THEME SWITCH ---------- */
+
+.theme-switch { display: flex; border: 3px solid var(--line); }
+
+.theme-switch button {
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border: 0;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.theme-switch button + button { border-left: 3px solid var(--line); }
+
+.theme-switch button[aria-pressed="true"] {
+  background: var(--line);
+  color: var(--bg);
+}
+
+/* ---------- 6. HERO (shapes + tilted label) ---------- */
+
+.hero { position: relative; isolation: isolate; padding: 88px 0 96px; }
+
+/* big circle */
+.hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -60px;
+  top: 24px;
+  width: min(420px, 60vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 4px solid var(--line);
+}
+
+/* striped block */
+.hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: 40px;
+  bottom: 24px;
+  width: min(220px, 40vw);
+  height: 90px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--line) 0 8px,
+    transparent 8px 20px
+  );
+}
+
+.eyebrow {
+  display: inline-block;
+  transform: rotate(-3deg);
+  margin-bottom: 20px;
+  padding: 6px 16px;
+  background: var(--accent);
+  color: var(--on-accent);
+  border: 3px solid var(--line);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hero p:not(.eyebrow) { font-size: 1.1rem; color: var(--text); }
+
+/* ---------- 7. BUTTONS ---------- */
+
+.actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 28px; }
+
+.button {
+  display: inline-block;
+  padding: 12px 24px;
+  border: 3px solid var(--line);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 800;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 6px 6px 0 var(--line);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.button:hover { transform: translate(3px, 3px); box-shadow: 3px 3px 0 var(--line); }
+.button-outline { background: var(--surface); color: var(--text); }
+
+.text-link {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+}
+
+.text-link:hover { background: var(--accent); color: var(--on-accent); }
+
+/* ---------- 8. TICKER BAND ---------- */
+
+.ticker {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+  background: var(--line);
+  color: var(--bg);
+  border-top: 4px solid var(--line);
+  border-bottom: 4px solid var(--line);
+  transform: rotate(-1.5deg);
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: slide 30s linear infinite;
+}
+
+.ticker-track span {
+  white-space: nowrap;
+  padding: 10px 0;
+  font-family: "Anton", Impact, sans-serif;
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+@keyframes slide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ---------- 9. COLOR-BLOCK SECTIONS ----------
+   These stretch to the full width of the screen. */
+
+.block,
+.block-accent {
+  background: var(--block);
+  box-shadow: 0 0 0 100vmax var(--block);
+  clip-path: inset(0 -100vmax);
+}
+
+.block-accent {
+  background: var(--accent);
+  box-shadow: 0 0 0 100vmax var(--accent);
+}
+
+.block p,
+.block-accent p { color: var(--text); }
+
+.block-accent h2 { border-color: var(--text); }
+.block-accent p,
+.block-accent h2 { color: var(--on-accent); }
+.block-accent h2 { border-color: var(--on-accent); }
+
+/* ---------- 10. CARDS + TAGS ---------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px;
+  counter-reset: item;
+}
+
+.card {
+  counter-increment: item;
+  background: var(--surface);
+  border: 3px solid var(--line);
+  padding: 22px;
+  box-shadow: 8px 8px 0 var(--line);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.card:hover { transform: translate(4px, 4px); box-shadow: 4px 4px 0 var(--line); }
+
+.card p:last-child { margin-bottom: 0; }
+
+.issuer {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 2px 10px;
+  background: var(--line);
+  color: var(--bg);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.card p { color: var(--muted); }
+.card .issuer { color: var(--bg); }
+
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+
+.tags li {
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 2px 10px;
+  border: 2px solid var(--line);
+  color: var(--text);
+}
+
+/* ---------- 11. TIMELINE ---------- */
+
+.timeline { border-left: 6px solid var(--line); padding-left: 28px; }
+
+.timeline-item { position: relative; padding-bottom: 40px; }
+.timeline-item:last-child { padding-bottom: 0; }
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -43px;
+  top: 4px;
+  width: 22px;
+  height: 22px;
+  background: var(--accent);
+  border: 3px solid var(--line);
+  transform: rotate(45deg);
+}
+
+.when {
+  display: inline-block;
+  padding: 2px 12px;
+  background: var(--accent);
+  color: var(--on-accent);
+  border: 3px solid var(--line);
+  font-family: "Anton", Impact, sans-serif;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.where { color: var(--text); font-weight: 800; margin-bottom: 8px; }
+
+/* ---------- 12. CAREER PATH ---------- */
+
+.path { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 8px; }
+
+.path li {
+  padding: 10px 20px;
+  background: var(--surface);
+  color: var(--text);
+  border: 3px solid var(--line);
+  box-shadow: 5px 5px 0 var(--line);
+  font-family: "Anton", Impact, sans-serif;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+}
+
+.path li + li::before {
+  content: "\2192";
+  margin-right: 14px;
+  color: var(--accent);
+  -webkit-text-stroke: 1px var(--text);
+}
+
+/* ---------- 13. CONTACT + FOOTER ---------- */
+
+.contact-list { display: grid; gap: 16px; max-width: 560px; margin-top: 8px; }
+
+.contact-list a {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--surface);
+  color: var(--text);
+  border: 3px solid var(--line);
+  box-shadow: 6px 6px 0 var(--line);
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.contact-list a:hover { transform: translate(3px, 3px); box-shadow: 3px 3px 0 var(--line); }
+.contact-list span { font-family: "Anton", Impact, sans-serif; text-transform: uppercase; font-weight: 400; }
+
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 32px;
+  padding-bottom: 56px;
+}
+
+.site-footer p { margin: 0; color: var(--text); font-weight: 600; }
+.site-footer a { font-weight: 800; text-transform: uppercase; }
+
+/* ---------- 14. PAPER GRAIN ---------- */
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- 15. PHONES ---------- */
+
+@media (max-width: 760px) {
+  .menu-button { display: block; }
+
+  .nav {
+    display: none;
+    order: 3;
+    flex-basis: 100%;
+    flex-direction: column;
+    gap: 2px;
+    padding-bottom: 8px;
+  }
+
+  .nav.open { display: flex; }
+  .nav a { padding: 10px 0; }
+
+  .hero { padding: 56px 0 72px; }
+  .hero::before { right: -90px; top: 0; }
+  section { padding: 56px 0; }
+}
+
+/* ---------- 15b. DARK THEME EXTRAS ----------
+   Light orange underlines so they stand out on dark crimson. */
+
+[data-theme="dark"] h2 { border-color: var(--line); }
+[data-theme="dark"] .timeline-item::before { background: var(--line); }
+
+/* ---------- 16. NEON THEME EXTRAS ----------
+   Glow, a night-sky background, and blue edges. */
+
+[data-theme="neon"] body {
+  background:
+    radial-gradient(ellipse 70% 50% at 50% -5%, rgba(31, 122, 145, 0.55), transparent 70%),
+    radial-gradient(ellipse 60% 45% at 50% 105%, rgba(10, 62, 85, 0.6), transparent 70%),
+    linear-gradient(180deg, #040d1d 0%, #030613 100%);
+  background-attachment: fixed;
+}
+
+[data-theme="neon"] h1 { text-shadow: 0 0 24px rgba(41, 197, 255, 0.55); }
+[data-theme="neon"] h2 { border-color: var(--accent); box-shadow: 0 6px 16px -6px rgba(41, 197, 255, 0.8); }
+
+[data-theme="neon"] .card,
+[data-theme="neon"] .contact-list a,
+[data-theme="neon"] .path li,
+[data-theme="neon"] .button {
+  box-shadow: 0 0 16px rgba(41, 197, 255, 0.45), inset 0 0 14px rgba(41, 197, 255, 0.1);
+}
+
+[data-theme="neon"] .card:hover,
+[data-theme="neon"] .contact-list a:hover,
+[data-theme="neon"] .button:hover {
+  box-shadow: 0 0 26px rgba(41, 197, 255, 0.75), inset 0 0 16px rgba(41, 197, 255, 0.18);
+}
+
+[data-theme="neon"] .hero::before { box-shadow: 0 0 60px rgba(41, 197, 255, 0.6); }
+[data-theme="neon"] .block { background: rgba(4, 20, 39, 0.85); box-shadow: 0 0 0 100vmax rgba(4, 20, 39, 0.85); }
+[data-theme="neon"] .block-accent .contact-list a { background: var(--bg); color: var(--text); }
+[data-theme="neon"] .site-header { background: #030613; }
+
+/* ---------- 17. ACCESSIBILITY ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .ticker-track { animation: none; }
+  .button, .card, .contact-list a { transition: none; }
+}
